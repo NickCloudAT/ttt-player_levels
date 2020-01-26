@@ -9,6 +9,8 @@ hook.Add("PlayerDeath", "PLEVELS_DEATH", function(ply, inflictor, attacker)
 
   if not attacker:IsTerror() or attacker == ply then return end
 
+  if attacker:IsInTeam(ply) then return end
+
   if(ply:LastHitGroup() == HITGROUP_HEAD) then
     PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64())*2)
     return
@@ -32,6 +34,8 @@ hook.Add("PlayerHurt", "PLEVELS_HANDLE_HURT", function(victim, attacker, remain,
   if not IsValid(attacker) or not attacker:IsPlayer() then return end
 
   if not attacker:IsTerror() or attacker == victim then return end
+
+  if attacker:IsInTeam(victim) then return end
 
   if not attacker.plevels_damage then attacker.plevels_damage = {} end
 
