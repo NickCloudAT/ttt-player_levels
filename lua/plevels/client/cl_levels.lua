@@ -4,19 +4,6 @@ hook.Add("TTTScoreboardColumns", "TTT_PLEVELS_SC", function(pnl)
   end, 101)
 end)
 
-hook.Add("TTTEndRound", "TTT_SHOW_XP", function()
-  local ply = LocalPlayer()
-
-  if not ply or not IsValid(ply) then return end
-
-  notification.AddProgress("PLEVELS_SHOWXP" ,tostring(math.Round(PLEVELS_DATA:GetXP(ply), 2)) .. "/" .. tostring(PLEVELS_DATA:GetNeededXP(ply)) .. " XP", 0, 8)
-
-  timer.Simple(5, function()
-	notification.Kill("PLEVELS_SHOWXP")
-  end)
-end)
-
-
 net.Receive("PLEVELS_LEVELUP", function()
   local ply = net.ReadEntity()
   local level = net.ReadUInt(10)

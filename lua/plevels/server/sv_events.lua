@@ -12,11 +12,11 @@ hook.Add("PlayerDeath", "PLEVELS_DEATH", function(ply, inflictor, attacker)
   if attacker:IsInTeam(ply) then return end
 
   if(ply:LastHitGroup() == HITGROUP_HEAD) then
-    PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64())*2)
+    PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64(), true)*2)
     return
   end
 
-  PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64()))
+  PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64(), true))
 
 end)
 
@@ -58,6 +58,7 @@ hook.Add("TTTPrepareRound", "PLEVELS_CLEAR_DAMAGE", function()
 end)
 
 hook.Add("TTTEndRound", "PLEVELS_CHECK_LEVELUP", function()
+  PLEVELS_DATA:EndRound()
   for k,v in ipairs(player.GetAll()) do
     PLEVELS_DATA:CheckLevelUp(v)
   end
