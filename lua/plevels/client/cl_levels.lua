@@ -16,7 +16,7 @@ net.Receive("PLEVELS_LEVELUP", function()
         text = "Level UP",
         color = Color(0, 255, 0)
       },
-      "You reached Level " .. tostring(level), 10
+      "You reached Level " .. tostring(level), 18
     )
     return
   end
