@@ -20,7 +20,7 @@ end
 
 
 function PLEVELS_DATA:UpdatePlayer(ply)
-  if not PLEVELS_DATA:IsCached(ply) then return end
+  if not PLEVELS_DATA:IsCached(ply) or not ply:IsConnected() then return end
 
   PLEVELS_DATA.MYSQL:SetLevel(ply:SteamID64(), PLEVELS_DATA:GetLevel(ply))
   PLEVELS_DATA.MYSQL:SetXP(ply:SteamID64(), PLEVELS_DATA:GetXP(ply))
@@ -29,7 +29,7 @@ end
 
 function PLEVELS_DATA:UpdateAll()
   for k,v in ipairs(player.GetAll()) do
-    if IsValid(v) and v:IsConnected() and PLEVELS_DATA:IsCached(v) and not v:IsBot() then
+    if IsValid(v) and PLEVELS_DATA:IsCached(v) and not v:IsBot() then
       PLEVELS_DATA:UpdatePlayer(v)
     end
   end
