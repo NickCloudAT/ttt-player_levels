@@ -1,7 +1,7 @@
 if not SERVER then return end
 
 hook.Add("PlayerDeath", "PLEVELS_DEATH", function(ply, inflictor, attacker)
-  if GetRoundState() ~= ROUND_ACTIVE then return end
+  if GetRoundState() ~= ROUND_ACTIVE or #player.GetAll() <= 3 then return end
 
   if not IsValid(ply) or ply:IsBot() or not ply:IsTerror() then return end
 
@@ -27,7 +27,7 @@ hook.Add("PlayerDisconnected", "PLEVELS_HANDLE_QUIT", function(ply)
 end)
 
 hook.Add("PlayerHurt", "PLEVELS_HANDLE_HURT", function(victim, attacker, remain, taken)
-  if GetRoundState() ~= ROUND_ACTIVE then return end
+  if GetRoundState() ~= ROUND_ACTIVE or #player.GetAll() <= 3 then return end
 
   if not IsValid(victim) or victim:IsBot() or not victim:IsTerror() then return end
 
