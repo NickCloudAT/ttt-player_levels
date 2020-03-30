@@ -1,5 +1,5 @@
 function PLEVELS_DATA:GetNeededXP(ply)
-  return 100+(20*(PLEVELS_DATA:GetLevel(ply)+1))
+  return 100+(20*(self:GetLevel(ply)+1))
 end
 
 
@@ -18,22 +18,25 @@ if SERVER then
 
 
   function PLEVELS_DATA:CheckLevelUp(ply)
-    local current_xp = PLEVELS_DATA:GetXP(ply)
-    local needed_xp = PLEVELS_DATA:GetNeededXP(ply)
+    local current_xp = self:GetXP(ply)
+    local needed_xp = self:GetNeededXP(ply)
 
     if current_xp < needed_xp then return end
 
     local difference = current_xp-needed_xp
 
-    PLEVELS_DATA:SetXP(ply, difference)
-    PLEVELS_DATA:AddLevel(ply, 1)
+    self:SetXP(ply, difference)
+    self:AddLevel(ply, 1)
+
+    self.level_ups[ply] = self:GetLevel(ply)
 
     net.Start("PLEVELS_LEVELUP")
     net.WriteEntity(ply)
-    net.WriteUInt(PLEVELS_DATA:GetLevel(ply), 10)
-    net.Broadcast()
+    net.WriteUInt(self:GetLevel(ply), 10)
+    net.WriteBool(false)
+    net.Send(ply)
 
-    hook.Run("TTTPlevelsLevelUP", ply, PLEVELS_DATA:GetLevel(ply))
+    hook.Run("TTTPlevelsLevelUP", ply, self:GetLevel(ply))
   end
 
   function PLEVELS_DATA:EndRound()
@@ -41,7 +44,7 @@ if SERVER then
       if not v.plevels_damage then continue end
 
       for id64 in pairs(v.plevels_damage) do
-        PLEVELS_DATA:AddXP(v, PLEVELS_DATA:GetGrantedXP(v, id64, false))
+        self:AddXP(v, self:GetGrantedXP(v, id64, false))
       end
     end
   end

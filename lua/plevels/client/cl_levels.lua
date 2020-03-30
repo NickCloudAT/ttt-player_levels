@@ -7,10 +7,13 @@ end)
 net.Receive("PLEVELS_LEVELUP", function()
   local ply = net.ReadEntity()
   local level = net.ReadUInt(10)
+  local global = net.ReadBool()
 
   local localPly = LocalPlayer()
 
-  if(ply == localPly) then
+  if global and localPly == ply then return end
+
+  if not global then
     EPOP:AddMessage(
       {
         text = "Level UP",
@@ -21,6 +24,12 @@ net.Receive("PLEVELS_LEVELUP", function()
     return
   end
 
-  chat.AddText(Color(0, 255, 0), ply:Nick() .. " has reached Level " .. tostring(level))
+  EPOP:AddMessage(
+    {
+      text = ply:Nick() .. " Leveled UP",
+      color = Color(0, 255, 0)
+    },
+    ply:Nick() .. " reached Level " .. tostring(level), 10
+  )
 
 end)

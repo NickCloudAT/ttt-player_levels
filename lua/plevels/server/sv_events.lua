@@ -12,7 +12,7 @@ hook.Add("PlayerDeath", "PLEVELS_DEATH", function(ply, inflictor, attacker)
   if attacker:IsInTeam(ply) then return end
 
   if(ply:LastHitGroup() == HITGROUP_HEAD) then
-    PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64(), true)*2)
+    PLEVELS_DATA:AddXP(attacker, PLEVELS_DATA:GetGrantedXP(attacker, ply:SteamID64(), true)*1.5)
     return
   end
 

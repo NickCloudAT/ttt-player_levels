@@ -3,11 +3,11 @@
 -- Get all stats
 
 function PLEVELS_DATA:GetLevel(ply)
-  return ply:GetNWInt('plevels_level', 1)
+  return ply:GetNWInt('plevels_level', nil)
 end
 
 function PLEVELS_DATA:GetXP(ply)
-  return ply:GetNWFloat('plevels_xp', 0)
+  return ply:GetNWFloat('plevels_xp', nil)
 end
 
 
@@ -26,7 +26,7 @@ if SERVER then
   end
 
   function PLEVELS_DATA:AddXP(ply, value)
-    local newXP = PLEVELS_DATA:GetXP(ply)+value
+    local newXP = self:GetXP(ply)+value
     ply:SetNWFloat('plevels_xp', math.Round(newXP, 2))
   end
 end
