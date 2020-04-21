@@ -16,6 +16,14 @@ if SERVER then
     return killed and dmg_dealt*0.015 or dmg_dealt*0.01
   end
 
+  function PLEVELS_DATA:ReduceXP(ply, value)
+    local new_xp = PLEVELS_DATA:GetXP(ply)-value
+
+    new_xp = new_xp < 0 and 0 or new_xp
+
+    PLEVELS_DATA:SetXP(ply, new_xp)
+  end
+
 
   function PLEVELS_DATA:CheckLevelUp(ply)
     local current_xp = self:GetXP(ply)

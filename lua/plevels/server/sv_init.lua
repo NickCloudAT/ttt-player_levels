@@ -8,14 +8,16 @@ include("sv_mysql.lua")
 include("sv_events.lua")
 include("sv_cache.lua")
 include("sv_stats.lua")
+include("sv_net.lua")
 
 include("plevels/shared/sh_storage.lua")
 include("plevels/shared/sh_stats.lua")
+include("plevels/shared/sh_utils.lua")
 
-
-AddCSLuaFile("plevels/client/cl_levels.lua")
 
 util.AddNetworkString("PLEVELS_LEVELUP")
+util.AddNetworkString("PLEVELS_SETLEVEL")
+util.AddNetworkString("PLEVELS_SETXP")
 
 timer.Create("PLEVELS_LEVELUP_POPUP", 6, 0, function()
   if table.IsEmpty(PLEVELS_DATA.level_ups) then return end
