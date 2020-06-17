@@ -47,6 +47,7 @@ hook.Add("PlayerHurt", "PLEVELS_HANDLE_HURT", function(victim, attacker, remain,
   end
 
   local beforeHealth = remain+taken
+  beforeHealth = math.Round(beforeHealth, 0)
 
   if taken > beforeHealth then taken = beforeHealth end
 
